@@ -13,20 +13,24 @@ import retrofit.http.Part;
  */
 
 // root of web service
-    // http://localhost:8080/NyomtServ1-1.0/webresources/com.mycompany.nyomtserv1.upload
-public interface FileAPI {
+    // http://localhost:8080/NyomtServ1-1.0/webresources/com.mycompany.nyomtserv1.upload/upload
+    public interface FileAPI {
 
     // Upload API service URL
     @Multipart
-    @POST("com.mycompany.nyomtserv1.upload")
+    @POST("com.mycompany.nyomtserv1.upload/upload")
     Call<String> getImage(
             @Part("myfile\";filename=\"image.png\"")RequestBody file,
             @Part("description") String description);
 
     @Multipart
-    @POST("com.mycompany.nyomtserv1.upload")
+    @POST("com.mycompany.nyomtserv1.upload/upload")
     Call<String> getImageOne(
-            @Part("myfile")RequestBody file);
+            @Part("file")RequestBody file);
 
+    @Multipart
+    @POST("com.mycompany.nyomtserv1.upload/upload")
+    Call<String> getImageTwo(
+            @Part("file\";file=\"image.png\"")RequestBody file);
 
 }

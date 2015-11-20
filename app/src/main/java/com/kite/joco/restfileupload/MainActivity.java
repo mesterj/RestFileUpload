@@ -99,12 +99,34 @@ public class MainActivity extends AppCompatActivity {
         call.enqueue(new Callback<String>() {
             @Override
             public void onResponse(Response<String> response, Retrofit retrofit) {
+                Log.i("Válasz siker esetén", response.toString());
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.e("Hiba esetén", t.getMessage());
+            }
+        });
+    }
+
+    public void sendPic2(){
+        File file = new File(selectedImagePath);
+        FileAPI fileAPIService = FileService.createFileService(FileAPI.class);
+
+        String description = "This is the description";
+
+        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"),file);
+
+        Call<String> call = fileAPIService.getImageTwo(requestBody);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Response<String> response, Retrofit retrofit) {
                 Log.i("Válasz siker esetén",response.toString());
             }
 
             @Override
             public void onFailure(Throwable t) {
-                Log.e("Válasz sikertelenség esetén",t.getMessage());
+                Log.e("Hiba esetén",t.getMessage());
             }
         });
     }

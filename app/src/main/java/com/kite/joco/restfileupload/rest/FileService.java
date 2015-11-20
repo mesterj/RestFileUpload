@@ -12,13 +12,13 @@ import retrofit.Retrofit;
  */
 public class FileService{
     private static String ROOT_WORK = "http://192.168.86.5:8080/NyomtServ1-1.0/webresources/";
-    private static FileAPI FILE_CLIENT;
+  //  private static FileAPI FILE_CLIENT;
 
     private static OkHttpClient httpClient = new OkHttpClient();
     private static Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 
     public static Retrofit.Builder builder = new Retrofit.Builder().baseUrl(ROOT_WORK)
-            .addConverterFactory(GsonConverterFactory.create(gson));
+            .addConverterFactory(GsonConverterFactory.create());
 
     public static <S> S createFileService(Class<S> fileService){
         Retrofit retrofit = builder.client(httpClient).build();
