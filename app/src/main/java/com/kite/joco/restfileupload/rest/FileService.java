@@ -11,7 +11,7 @@ import retrofit.Retrofit;
  * Created by Mester József on 2015.11.19..
  */
 public class FileService{
-    private static String ROOT_WORK = "http://192.168.86.5:8080/NyomtServ1-1.0/webresources/";
+    private static String ROOT_WORK = "http://192.168.86.2:8080/NyomtServ1-1.0/webresources/";
   //  private static FileAPI FILE_CLIENT;
 
     private static OkHttpClient httpClient = new OkHttpClient();
