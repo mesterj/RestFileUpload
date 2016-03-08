@@ -20,6 +20,9 @@ import com.squareup.okhttp.RequestBody;
 import org.w3c.dom.Text;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -48,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
                 selectFromGallery();
                 break;
             case (R.id.btnSend):
-                sendPic();
+                sendPicWork();
                 break;
             default:
         }
@@ -92,6 +95,9 @@ public class MainActivity extends AppCompatActivity {
         //Toast.makeText(this,"Ezt fogja elküldeni: "+selectedImagePath,Toast.LENGTH_LONG).show();
         File file = new File(selectedImagePath);
         FileAPI fileAPIService = FileService.createFileService(FileAPI.class);
+        //MediaType mediaType = MediaType.parse("image/jpg");
+        //RequestBody requestBody = RequestBody.create(mediaType, file);
+        //Call<UploadResponse> uploadFile = service.uploadFile(login, token, uploadId, requestBody);
 
         RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"),file);
 
@@ -115,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
 
         String description = "This is the description";
 
-        RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"),file);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("image/jpg"),file);
 
         Call<String> call = fileAPIService.getImageTwo(requestBody);
         call.enqueue(new Callback<String>() {
@@ -131,5 +137,38 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void sendPicWork() {
+        File file = new File(selectedImagePath);
+        FileAPI fileAPIservwork = FileService.createFileService(FileAPI.class);
+        Map<String, RequestBody> map = new HashMap<>();
+
+            RequestBody fileBody = RequestBody.create(MediaType.parse("image/jpg"), file);
+            //map.put("file\"; filename=\"pp.jpg\"", fileBody);
+            map.put("file\"; filename=\"" + file.getName(), fileBody);
+
+        Call<String> call = fileAPIservwork.uploadImageWork(map);
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Response<String> response, Retrofit retrofit) {
+                Log.i("REST","SUCCESS");
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                Log.i("REST","FAILURE");
+            }
+        });
+        /*try {
+            Response<String> resp = call.execute();
+            Log.i("RESP",resp.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }*/
+    }
+
+    public static RequestBody toRequestBody (String value) {
+        RequestBody body = RequestBody.create(MediaType.parse("text/plain"), value);
+        return body ;
+    }
 
 }
