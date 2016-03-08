@@ -16,6 +16,7 @@ import com.kite.joco.restfileupload.rest.FileAPI;
 import com.kite.joco.restfileupload.rest.FileService;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.ResponseBody;
 
 import org.w3c.dom.Text;
 
@@ -146,10 +147,10 @@ public class MainActivity extends AppCompatActivity {
             //map.put("file\"; filename=\"pp.jpg\"", fileBody);
             map.put("file\"; filename=\"" + file.getName(), fileBody);
 
-        Call<String> call = fileAPIservwork.uploadImageWork(map);
-        call.enqueue(new Callback<String>() {
+        Call<ResponseBody> call = fileAPIservwork.uploadImageWork(map);
+        call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Response<String> response, Retrofit retrofit) {
+            public void onResponse(Response<ResponseBody> response, Retrofit retrofit) {
                 Log.i("REST","SUCCESS");
             }
 
@@ -158,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("REST","FAILURE");
             }
         });
+
         /*try {
             Response<String> resp = call.execute();
             Log.i("RESP",resp.toString());

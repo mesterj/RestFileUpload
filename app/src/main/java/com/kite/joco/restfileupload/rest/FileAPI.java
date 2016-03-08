@@ -2,6 +2,7 @@ package com.kite.joco.restfileupload.rest;
 
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.RequestBody;
+import com.squareup.okhttp.ResponseBody;
 
 import java.util.Map;
 
@@ -42,7 +43,7 @@ import retrofit.http.PartMap;
     @Multipart
     @POST("com.mycompany.nyomtserv1.upload/upload")
     //@POST ("/api/Events/editevent")
-    Call<String> uploadImageWork (@PartMap Map<String, RequestBody> params);
+    Call<ResponseBody> uploadImageWork (@PartMap Map<String, RequestBody> params);
 
     @Multipart
     //@Headers(MediaType.class)
