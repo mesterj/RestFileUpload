@@ -14,9 +14,6 @@ import android.widget.Toast;
 
 import com.kite.joco.restfileupload.rest.FileAPI;
 import com.kite.joco.restfileupload.rest.FileService;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.ResponseBody;
 
 import org.w3c.dom.Text;
 
@@ -25,10 +22,14 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import retrofit.Call;
-import retrofit.Callback;
-import retrofit.Response;
-import retrofit.Retrofit;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -105,15 +106,26 @@ public class MainActivity extends AppCompatActivity {
         Call<String> call = fileAPIService.getImageOne(requestBody);
         call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Response<String> response, Retrofit retrofit) {
+            public void onResponse(Call<String> call, Response<String> response) {
                 Log.i("Válasz siker esetén", response.toString());
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                Log.e("Hiba esetén", t.getMessage());
+            }
+        });
+        /*call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Response<String> response, Retrofit retrofit) {
+
             }
 
             @Override
             public void onFailure(Throwable t) {
                 Log.e("Hiba esetén", t.getMessage());
             }
-        });
+        });*/
     }
 
     public void sendPic2(){
@@ -127,15 +139,16 @@ public class MainActivity extends AppCompatActivity {
         Call<String> call = fileAPIService.getImageTwo(requestBody);
         call.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Response<String> response, Retrofit retrofit) {
-                Log.i("Válasz siker esetén",response.toString());
+            public void onResponse(Call<String> call, Response<String> response) {
+
             }
 
             @Override
-            public void onFailure(Throwable t) {
-                Log.e("Hiba esetén",t.getMessage());
+            public void onFailure(Call<String> call, Throwable t) {
+
             }
         });
+
     }
 
     public void sendPicWork() {
@@ -150,27 +163,25 @@ public class MainActivity extends AppCompatActivity {
         Call<ResponseBody> call = fileAPIservwork.uploadImageWork(map);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Response<ResponseBody> response, Retrofit retrofit) {
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 Log.i("REST","SUCCESS");
+
+                try {
+                    Log.i("RESPONSE_BODY"," " +response.body().string());
+                    Log.i("RESPONSE_MESSAGE",response.message().toString());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 Log.i("REST","FAILURE");
+                Log.i("RESPONSE_BODY",call.toString());
             }
         });
 
-        /*try {
-            Response<String> resp = call.execute();
-            Log.i("RESP",resp.toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
     }
 
-    public static RequestBody toRequestBody (String value) {
-        RequestBody body = RequestBody.create(MediaType.parse("text/plain"), value);
-        return body ;
-    }
 
 }

@@ -1,19 +1,17 @@
 package com.kite.joco.restfileupload.rest;
 
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.ResponseBody;
 
 import java.util.Map;
 
-import retrofit.Call;
-import retrofit.Response;
-import retrofit.http.GET;
-import retrofit.http.Headers;
-import retrofit.http.Multipart;
-import retrofit.http.POST;
-import retrofit.http.Part;
-import retrofit.http.PartMap;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Response;
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
+
 
 /**
  * Created by Mester József on 2015.11.19..
@@ -27,7 +25,7 @@ import retrofit.http.PartMap;
     @Multipart
     @POST("com.mycompany.nyomtserv1.upload/upload")
     Call<String> getImage(
-            @Part("myfile\";filename=\"image.png\"")RequestBody file,
+            @Part("myfile\";filename=\"image.png\"") RequestBody file,
             @Part("description") String description);
 
     @Multipart
@@ -43,7 +41,7 @@ import retrofit.http.PartMap;
     @Multipart
     @POST("com.mycompany.nyomtserv1.upload/upload")
     //@POST ("/api/Events/editevent")
-    Call<ResponseBody> uploadImageWork (@PartMap Map<String, RequestBody> params);
+    Call<ResponseBody> uploadImageWork(@PartMap Map<String, RequestBody> params);
 
     @Multipart
     //@Headers(MediaType.class)
